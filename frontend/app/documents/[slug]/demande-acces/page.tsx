@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 
-export default function LegacyDocumentAccessRequestPage({
+export default async function LegacyDocumentAccessRequestPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  redirect(`/documents/${encodeURIComponent(params.slug)}/lire`);
+  const { slug } = await params;
+  redirect(`/documents/${encodeURIComponent(slug)}/lire`);
 }

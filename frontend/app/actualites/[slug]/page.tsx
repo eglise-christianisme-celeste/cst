@@ -26,9 +26,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const item = await getNewsBySlug(params.slug);
+  const { slug } = await params;
+  const item = await getNewsBySlug(slug);
 
   if (!item) {
     return { title: "Actualité introuvable" };
@@ -59,9 +60,10 @@ function articleLabel(item: { homeSlot?: string; category?: { name: string } }) 
 export default async function NewsDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const item = await getNewsBySlug(params.slug);
+  const { slug } = await params;
+  const item = await getNewsBySlug(slug);
 
   if (!item) notFound();
 

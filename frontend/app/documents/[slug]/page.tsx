@@ -23,9 +23,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const doc = await getDocumentBySlug(params.slug);
+  const { slug } = await params;
+  const doc = await getDocumentBySlug(slug);
   if (!doc) return { title: "Document introuvable" };
   return { title: doc.title, description: doc.summary };
 }
@@ -33,9 +34,10 @@ export async function generateMetadata({
 export default async function DocumentDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const doc = await getDocumentBySlug(params.slug);
+  const { slug } = await params;
+  const doc = await getDocumentBySlug(slug);
   if (!doc) notFound();
 
   const readablePdf = doc.fileType === "pdf" && Boolean(doc.fileUrl) && doc.fileUrl !== "#";

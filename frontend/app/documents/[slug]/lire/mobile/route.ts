@@ -31,9 +31,10 @@ function fallbackLocation(slug: string) {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { slug: string } },
+  { params }: { params: Promise<{ slug: string }> },
 ) {
-  const doc = await getDocumentBySlug(params.slug);
+  const { slug } = await params;
+  const doc = await getDocumentBySlug(slug);
 
   if (
     !doc ||
@@ -41,13 +42,13 @@ export async function GET(
     !doc.fileUrl ||
     doc.fileUrl === "#"
   ) {
-    return redirectWithoutInternalOrigin(fallbackLocation(params.slug));
+    return redirectWithoutInternalOrigin(fallbackLocation(slug));
   }
 
   const publicHref = toPublicMediaHref(doc.fileUrl);
 
   if (!publicHref) {
-    return redirectWithoutInternalOrigin(fallbackLocation(params.slug));
+    return redirectWithoutInternalOrigin(fallbackLocation(slug));
   }
 
   // Les ressources servies par le gateway (/api/ ou /media/) doivent rester
@@ -62,11 +63,11 @@ export async function GET(
     const target = new URL(publicHref);
 
     if (!['http:', 'https:'].includes(target.protocol)) {
-      return redirectWithoutInternalOrigin(fallbackLocation(params.slug));
+      return redirectWithoutInternalOrigin(fallbackLocation(slug));
     }
 
     return redirectWithoutInternalOrigin(target.toString());
   } catch {
-    return redirectWithoutInternalOrigin(fallbackLocation(params.slug));
+    return redirectWithoutInternalOrigin(fallbackLocation(slug));
   }
 }
