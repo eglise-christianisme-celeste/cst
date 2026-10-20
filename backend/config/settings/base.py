@@ -4,7 +4,7 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 
-env = environ.Env(
+env = environ.FileAwareEnv(
     DJANGO_DEBUG=(bool)
 )
 
@@ -12,6 +12,9 @@ env = environ.Env(
 # Aucun fichier .env n'est lu depuis backend/ ni depuis frontend/.
 # La source de configuration est centralisée dans docker/.env.dev ou
 # docker/.env.prod selon l'environnement.
+# FileAwareEnv : si VARIABLE_FILE est défini, la valeur est le contenu brut de ce
+# fichier (secrets rendus par l'agent Vault, jamais dans l'environnement) ; sinon
+# VARIABLE. Les fichiers docker/.env.* sans *_FILE marchent comme avant.
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = env.bool("DJANGO_DEBUG")
