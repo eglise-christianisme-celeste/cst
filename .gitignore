@@ -23,3 +23,7 @@ dist
 Thumbs.db
 *.tar.gz
 *.zip
+
+# Python
+__pycache__/
+*.py[cod]
