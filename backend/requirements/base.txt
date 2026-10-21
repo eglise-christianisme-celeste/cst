@@ -4,7 +4,7 @@ django-cors-headers>=4.7,<5
 django-filter>=25.1,<26
 django-environ>=0.12,<1
 psycopg[binary]>=3.2,<4
-Pillow>=11,<13
+Pillow>=13.0,<14          # 13.0 corrige les failles de décodage JPEG, TIFF, GIF et PDF d'octobre 2026
 celery>=5.4,<6.0
 redis>=5.0,<6.0
 
