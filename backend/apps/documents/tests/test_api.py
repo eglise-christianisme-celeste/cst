@@ -16,11 +16,8 @@ class PublicDocumentApiTests(TestCase):
             email="author@example.test",
             password="StrongPassword-123!",
         )
-        self.category = DocumentCategory.objects.create(
-            name="Rapports",
-            slug="rapports",
-            order=1,
-        )
+        # Catégorie créée par la migration 0002_seed_document_categories.
+        self.category = DocumentCategory.objects.get(slug="rapports")
 
     def _document(self, *, title, status):
         return Document.objects.create(

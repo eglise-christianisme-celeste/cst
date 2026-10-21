@@ -31,10 +31,8 @@ class DocumentWorkflowTests(TestCase):
         )
         self.editor.groups.add(editor_group)
 
-        self.category = DocumentCategory.objects.create(
-            name="Rapports",
-            slug="rapports",
-        )
+        # Catégorie créée par la migration 0002_seed_document_categories.
+        self.category = DocumentCategory.objects.get(slug="rapports")
 
         self.request = RequestFactory().post("/backoffice/documents/")
         self.request.META["REMOTE_ADDR"] = "127.0.0.1"

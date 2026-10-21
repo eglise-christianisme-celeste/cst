@@ -17,5 +17,10 @@
       }
     },
     "gateway": {"context": "docker/nginx", "dockerfile": "Dockerfile"}
+  },
+  "quality": {
+    "sonar": "cst",
+    "python": {"directory": "backend", "requirements": "requirements/test.lock.txt"},
+    "node": {"directory": "frontend", "scripts": ["lint", "build"]}
   }
 }

@@ -12,10 +12,8 @@ from .helpers import test_pdf
 
 class DocumentBackofficeTests(TestCase):
     def setUp(self):
-        self.category = DocumentCategory.objects.create(
-            name="Décisions",
-            slug="decisions",
-        )
+        # Catégorie créée par la migration 0002_seed_document_categories.
+        self.category = DocumentCategory.objects.get(slug="decisions")
 
         editor_group = Group.objects.get(name=GROUP_EDITOR)
         manager_group = Group.objects.get(name=GROUP_MANAGER)

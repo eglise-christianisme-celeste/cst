@@ -18,10 +18,10 @@ class LegacyConfidentialDocumentCompatibilityTests(TestCase):
             email="author@example.test",
             password="StrongPassword-123!",
         )
-        self.category = DocumentCategory.objects.create(
-            name="Rapports",
-            slug="rapports",
-        )
+        # Catégorie créée par la migration 0002_seed_document_categories.
+        self.category = DocumentCategory.objects.get(slug="rapports")
+        # is_confidential a été supprimé (0007_cleanup_legacy_document_access) : un ancien document confidentiel
+        # est un document ordinaire.
         self.document = Document.objects.create(
             title="Ancien rapport confidentiel",
             summary="Document désormais accessible publiquement",
@@ -36,7 +36,6 @@ class LegacyConfidentialDocumentCompatibilityTests(TestCase):
             status=PublicationStatus.PUBLISHED,
             author=self.author,
             last_editor=self.author,
-            is_confidential=True,
         )
 
     def test_legacy_confidential_flag_no_longer_blocks_public_reading(self):
@@ -45,8 +44,9 @@ class LegacyConfidentialDocumentCompatibilityTests(TestCase):
         )
         self.assertEqual(detail.status_code, 200)
         payload = detail.json()
-        self.assertFalse(payload["isConfidential"])
-        self.assertTrue(payload["canRead"])
+        # Les champs du contrôle d'accès ont disparu de l'API avec lui (ni le frontend ni l'API ne les lisent).
+        self.assertNotIn("isConfidential", payload)
+        self.assertNotIn("canRead", payload)
         self.assertTrue(payload["fileUrl"].endswith("/content/"))
         self.assertTrue(payload["downloadUrl"].endswith("/download/"))
 
