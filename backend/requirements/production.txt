@@ -1,2 +1,5 @@
+# Plages des dépendances de production. production.lock.txt en est généré, versions et empreintes figées :
+#   uv pip compile --generate-hashes --python-version 3.12 --python-platform x86_64-manylinux_2_28 --emit-index-url --no-strip-extras requirements/production.txt -o requirements/production.lock.txt
+# L'image installe production.lock.txt avec --require-hashes : un build ne résout jamais rien de lui-même.
 -r base.txt
 gunicorn>=23,<24

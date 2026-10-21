@@ -102,4 +102,6 @@ class BackofficeUserManagementTests(TestCase):
     def test_superuser_is_not_exposed_in_managed_user_list(self):
         self._force_verified_login(self.superadmin)
         response = self.client.get(reverse("backoffice:user_list"))
-        self.assertNotContains(response, self.superadmin.email)
+        # Le compte connecté s'affiche dans la barre latérale (base.html), jamais parmi les comptes gérés.
+        listed = [user.email for user in response.context["page_obj"].object_list]
+        self.assertNotIn(self.superadmin.email, listed)

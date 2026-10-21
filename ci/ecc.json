@@ -1,0 +1,26 @@
+{
+  "application": "cst",
+  "profile": "light",
+  "images": {
+    "backend": {"context": "backend", "dockerfile": "Dockerfile"},
+    "frontend": {
+      "context": "frontend",
+      "dockerfile": "Dockerfile.prod",
+      "target": "runner",
+      "build_args": {
+        "NEXT_PUBLIC_SITE_URL": "https://cst.ecc.bj",
+        "NEXT_PUBLIC_API_URL": "http://cst-backend:8000/api/v1",
+        "NEXT_PUBLIC_DATA_SOURCE": "mock",
+        "NEXT_PUBLIC_NEWS_SOURCE": "api",
+        "NEXT_PUBLIC_GALLERY_SOURCE": "api",
+        "NEXT_PUBLIC_DOCUMENTS_SOURCE": "api"
+      }
+    },
+    "gateway": {"context": "docker/nginx", "dockerfile": "Dockerfile"}
+  },
+  "quality": {
+    "sonar": "cst",
+    "python": {"directory": "backend", "requirements": "requirements/test.lock.txt"},
+    "node": {"directory": "frontend", "scripts": ["lint", "build"]}
+  }
+}

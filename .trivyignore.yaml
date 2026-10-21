@@ -1,0 +1,7 @@
+# Reviewed Trivy exceptions, each limited to a rule and a path (read by the ecc-devops pipeline).
+misconfigurations:
+  - id: DS-0002
+    paths: ["frontend/Dockerfile.dev"]
+    statement: >-
+      Local development image only (docker/docker-compose.dev.yml, hot reload from a bind mount). Production is
+      built from frontend/Dockerfile.prod, which runs as cstuser.

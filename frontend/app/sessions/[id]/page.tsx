@@ -22,9 +22,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const session = await getSessionBySlug(params.id);
+  const { id } = await params;
+  const session = await getSessionBySlug(id);
   if (!session) return { title: "Session introuvable" };
 
   return {
@@ -39,9 +40,10 @@ export async function generateMetadata({
 export default async function SessionDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const session = await getSessionBySlug(params.id);
+  const { id } = await params;
+  const session = await getSessionBySlug(id);
   if (!session) notFound();
 
   const docs = session.documents ?? [];

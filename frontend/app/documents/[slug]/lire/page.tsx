@@ -25,9 +25,10 @@ function safeReturnHref(value: string | string[] | undefined, fallback: string) 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const doc = await getDocumentBySlug(params.slug);
+  const { slug } = await params;
+  const doc = await getDocumentBySlug(slug);
 
   if (!doc) return { title: "Document introuvable" };
 
@@ -41,14 +42,16 @@ export default async function DocumentReaderPage({
   params,
   searchParams,
 }: {
-  params: { slug: string };
-  searchParams?: { from?: string | string[] };
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ from?: string | string[] }>;
 }) {
-  const doc = await getDocumentBySlug(params.slug);
+  const { slug } = await params;
+  const { from } = (await searchParams) ?? {};
+  const doc = await getDocumentBySlug(slug);
   if (!doc) notFound();
 
   const fallbackHref = safeReturnHref(
-    searchParams?.from,
+    from,
     `/documents/${doc.slug}`,
   );
 

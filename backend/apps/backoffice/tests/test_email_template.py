@@ -17,4 +17,6 @@ class LoginOTPEmailTests(TestCase):
         self.assertEqual(len(message.alternatives), 1)
         self.assertEqual(message.alternatives[0][1], "text/html")
         self.assertIn("483721", message.alternatives[0][0])
-        self.assertIn("CST / CSMO", message.alternatives[0][0])
+        # La version HTML porte la graphie du site (CST / CSMo), la version texte CST / CSMO.
+        self.assertIn("CST / CSMo", message.alternatives[0][0])
+        self.assertIn("CST / CSMO", message.body)
