@@ -14,9 +14,10 @@ RUN apk del --no-network \
        'fastcgi_temp_path /tmp/fastcgi_temp;' 'uwsgi_temp_path /tmp/uwsgi_temp;' 'scgi_temp_path /tmp/scgi_temp;' \
        > /etc/nginx/conf.d/00-unprivileged.conf
 
-COPY default.conf /etc/nginx/conf.d/default.conf
-COPY errors/maintenance.html /usr/share/nginx/html/maintenance.html
-COPY errors/system-error.html /usr/share/nginx/html/system-error.html
+# Lisibles par nginx, modifiables par root seul, quel que soit le contexte de build.
+COPY --chmod=0644 default.conf /etc/nginx/conf.d/default.conf
+COPY --chmod=0644 errors/maintenance.html /usr/share/nginx/html/maintenance.html
+COPY --chmod=0644 errors/system-error.html /usr/share/nginx/html/system-error.html
 
 USER nginx
 

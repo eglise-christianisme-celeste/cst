@@ -44,7 +44,10 @@ ENV NEXT_PUBLIC_DOCUMENTS_SOURCE=$NEXT_PUBLIC_DOCUMENTS_SOURCE
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-RUN npm run build
+# Mêmes droits quel que soit le contexte de build (instantané de la CI aux répertoires en 0700) : public/ et les
+# sources passent en répertoires 0755 et fichiers 0644 avant le build ; le runner les copie tels quels.
+RUN find . -mindepth 1 -maxdepth 1 ! -name node_modules -exec chmod -R u=rwX,go=rX {} + \
+    && npm run build
 
 
 FROM ${NODE_IMAGE} AS runner
@@ -68,7 +71,11 @@ RUN rm -rf /usr/local/lib/node_modules /opt/yarn* \
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
-RUN mkdir -p .next/cache && chown cstuser:cstgroup .next/cache
+# Le build échoue si cstuser ne pouvait pas lire le code ou pouvait le modifier (hors du cache de Next).
+RUN mkdir -p .next/cache && chown cstuser:cstgroup .next/cache \
+    && bad=$(find /app \( -path /app/.next/cache -o -type l \) -prune -o \
+             \( -type d ! -perm -005 -o -type f ! -perm -004 -o -perm -020 -o -perm -002 \) -print | head -5) \
+    && if [ -n "$bad" ]; then echo "Droits du code refusés pour cstuser : $bad" >&2; exit 1; fi
 
 USER cstuser
 
