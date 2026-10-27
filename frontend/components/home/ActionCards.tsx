@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/layout/Container";
+import { SITE } from "@/lib/constants";
 import styles from "./ActionCards.module.scss";
 
 const cards = [
@@ -30,7 +31,7 @@ const cards = [
     tag: "DIGECC",
     title: "Digitalisation de l’ECC",
     text: "La modernisation numérique accompagne la structuration de l’Église à travers le recensement, la cartographie et de nouveaux outils de gestion.",
-    href: "https://recensement-paroisses.ecc.bj",
+    href: SITE.digitalisationUrl,
     linkLabel: "Accéder à DIGECC",
     external: true,
   },
