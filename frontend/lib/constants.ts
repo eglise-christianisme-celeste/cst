@@ -13,7 +13,9 @@ export const SITE = {
   phone: "+229 0148 899 999 | +229 01 498 999 999",
   locale: "fr_FR",
   motto: "Une même foi — Une même vision — Une même Église.",
-  digitalisationUrl: "https://recensement-paroisses.ecc.bj",
+  digitalisationUrl: "https://digecc.ecc.bj",
+  // Site du Pèlerinage de Sèmè : adresse actuelle, à remplacer par le domaine définitif à sa mise en service.
+  pelerinageUrl: "https://test-pelerinage.ecc.bj",
 };
 
 export type NavLink = {
@@ -203,6 +205,11 @@ export const FOOTER_GROUPS: FooterGroup[] = [
       {
         label: "Digitalisation de l'ECC",
         href: SITE.digitalisationUrl,
+        external: true,
+      },
+      {
+        label: "Pèlerinage de Sèmè 2026",
+        href: SITE.pelerinageUrl,
         external: true,
       },
     ],

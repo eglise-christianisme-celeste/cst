@@ -540,6 +540,14 @@ export default function Navbar() {
 
         <div className={styles.homeLeftTools}>
           <LanguageSwitch />
+          <a
+            href={SITE.pelerinageUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.semeButton}
+          >
+            SÈMÈ 2026 <ExternalIndicator />
+          </a>
         </div>
 
         <DesktopNavigation
@@ -745,6 +753,14 @@ export default function Navbar() {
 
             <div className={styles.mobileTools}>
               <div className={styles.mobileToolsTop}>
+                <a
+                  href={SITE.pelerinageUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mobileSeme}
+                >
+                  SÈMÈ 2026 <ExternalIndicator />
+                </a>
                 <a
                   href={SITE.digitalisationUrl}
                   target="_blank"

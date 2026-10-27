@@ -708,6 +708,42 @@
   }
 }
 
+/*
+ * Site du Pèlerinage de Sèmè : même gabarit que DIGECC, couleurs inversées
+ * pour ne pas confondre les deux plateformes.
+ */
+.semeButton,
+.mobileSeme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  min-height: 2.45rem;
+  border: 1px solid v.$color-blue-ink;
+  border-radius: v.$radius-lg;
+  padding: 0.55rem 0.82rem;
+  background: v.$color-blue-ink;
+  color: v.$color-yellow;
+  font-size: v.$font-size-meta;
+  font-weight: 900;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+  transition:
+    transform 0.16s ease,
+    background-color 0.16s ease;
+
+  &:hover,
+  &:focus-visible {
+    background: v.$color-blue-deep;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--nav-focus-ring);
+    outline-offset: 2px;
+  }
+}
+
 /* ------------------------------------------------------------------
    Recherche
    ------------------------------------------------------------------ */
@@ -964,12 +1000,18 @@
     min-width: 0;
   }
 
+  /*
+   * Langue puis Sèmè 2026 : le bouton déborde dans l'espace libre à gauche du
+   * menu, la colonne garde la largeur de celle des outils pour centrer le logo.
+   */
   .homeLeftTools {
     grid-column: 1;
     display: flex;
     align-items: center;
     justify-self: start;
+    gap: 0.5rem;
     min-width: 0;
+    width: max-content;
   }
 
   .homeNavLeft,
@@ -1069,7 +1111,7 @@
   }
 
   .homeLeftTools {
-    gap: 0;
+    gap: 0.3rem;
   }
 
   .desktopTools {
@@ -1094,7 +1136,8 @@
     height: 1.95rem;
   }
 
-  .digeccButton {
+  .digeccButton,
+  .semeButton {
     min-height: 1.95rem;
     padding: 0.36rem 0.4rem;
     font-size: 0.7rem;
@@ -1156,7 +1199,8 @@
     height: 2.05rem;
   }
 
-  .digeccButton {
+  .digeccButton,
+  .semeButton {
     min-height: 2.1rem;
     padding: 0.42rem 0.48rem;
     font-size: v.$font-size-meta;
@@ -1240,6 +1284,8 @@
   .dropdownTrigger,
   .digeccButton,
   .mobileDigecc,
+  .semeButton,
+  .mobileSeme,
   .dropdownToggle {
     transition: none;
   }
