@@ -1,4 +1,5 @@
 import Container from "@/components/layout/Container";
+import { SITE } from "@/lib/constants";
 import styles from "./DigitalisationSection.module.scss";
 
 export default function DigitalisationSection() {
@@ -17,7 +18,7 @@ export default function DigitalisationSection() {
             <span>Structuration numérique</span>
           </div>
           <a
-            href="https://recensement-paroisses.ecc.bj"
+            href={SITE.digitalisationUrl}
             target="_blank"
             rel="noopener noreferrer"
             className={styles.cta}

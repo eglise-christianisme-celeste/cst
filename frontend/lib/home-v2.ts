@@ -1,3 +1,5 @@
+import { SITE } from "@/lib/constants";
+
 export type HomePanelId =
   | "accueil"
   | "comprendre"
@@ -298,7 +300,7 @@ export const RESOURCE_GROUPS: HomeResourceGroup[] = [
     title: "Outils et accès",
     intro: "Des liens pratiques pour suivre et utiliser les services du site.",
     items: [
-      { label: "DIGECC", description: "Plateforme de digitalisation de l’ECC", href: "https://recensement-paroisses.ecc.bj", external: true },
+      { label: "DIGECC", description: "Plateforme de digitalisation de l’ECC", href: SITE.digitalisationUrl, external: true },
       { label: "Actualités", description: "Informations et mises à jour récentes", href: "/actualites" },
       { label: "Contact", description: "Écrire à l’équipe institutionnelle", href: "/contact" },
     ],
